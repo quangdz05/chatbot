@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="Chatbot_Application/Chatbot_Application.csproj" />
+  <Project Path="Chatbot_Domain/Chatbot_Domain.csproj" />
+  <Project Path="Chatbot_Infrastructure/Chatbot_Infrastructure.csproj" />
+  <Project Path="Chat_API/Chat_API.csproj" />
+  <Project Path="Chat_API.Tests/Chat_API.Tests.csproj" />
+</Solution>

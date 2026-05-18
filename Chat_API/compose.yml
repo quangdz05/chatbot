@@ -1,0 +1,42 @@
+services:
+  postgres:
+    image: postgres:17
+    container_name: chatbot_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-admin}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-123456}
+      POSTGRES_DB: ${POSTGRES_DB:-chatbotdb}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  api:
+    build:
+      context: .
+      dockerfile: Chat_API/Chat_API/Dockerfile
+    container_name: chat_api
+    restart: always
+    depends_on:
+      - postgres
+    environment:
+      ASPNETCORE_ENVIRONMENT: Production
+      ASPNETCORE_URLS: http://+:8080
+      ConnectionStrings__DefaultConnection: Host=postgres;Port=5432;Database=db_co_pgvector;Username=postgres;Password=mysecretpassword
+      AiSettings__Provider: Gemini
+      AiSettings__ApiKey: AIzaSyBismBI7ZgZDkoNuWibIb8SpHa8Mqk0LgA
+      GEMINI_API_KEY: AIzaSyBismBI7ZgZDkoNuWibIb8SpHa8Mqk0LgA
+      AiSettings__EmbeddingModel: text-embedding-004
+      AiSettings__ChatModel: gemini-2.5-flash
+      AuthSettings__JwtKey: 37j5Z97Mz4evQLAVi0NBSCposEbiQZDDWTFcpgODtqCZ/qdUG4PEqH1Ota18sVYFfvKZGRmUhge7KQhtn0tJ9A==
+      SeedSettings__Enabled: "false"
+      UploadSettings__RootPath: /app/uploads
+    ports:
+      - "8080:8080"
+    volumes:
+      - uploads_data:/app/uploads
+
+volumes:
+  postgres_data:
+  uploads_data:
