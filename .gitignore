@@ -16,6 +16,11 @@ yarn-error.log
 dist/
 build/
 .env
+.env.*
+!.env.example
+artifacts/
+**/artifacts/
+appsettings.*.local.json
 
 # MacOS
 .DS_Store
